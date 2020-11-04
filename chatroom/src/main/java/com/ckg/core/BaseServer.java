@@ -1,16 +1,29 @@
 package com.ckg.core;
 
+//import io.netty.bootstrap.ServerBootstrap;
+//import io.netty.channel.ChannelFuture;
+//import io.netty.channel.DefaultEventLoopGroup;
+//import io.netty.channel.nio.NioEventLoopGroup;
+//import io.netty.channel.socket.nio.NioServerSocketChannel;
+//import org.omg.SendingContext.RunTime;
+//import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+
+
+
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.DefaultEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.omg.SendingContext.RunTime;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Service;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+//
+//import java.util.concurrent.ThreadFactory;
+//import java.util.concurrent.atomic.AtomicInteger;
 
 public  abstract class BaseServer implements Server {
    protected  Logger logger= LoggerFactory.getLogger(getClass());
@@ -19,8 +32,9 @@ public  abstract class BaseServer implements Server {
    protected DefaultEventLoopGroup   defaultEventLoopGroup;
    protected NioEventLoopGroup  bossGroup;
    protected  NioEventLoopGroup workGroup;
+    protected ChannelFuture cf;
    protected NioServerSocketChannel   serverSocketChannel;
-   private ServerBootstrap serverBootstrap;
+ protected ServerBootstrap b;
 
     public  void init(){
      defaultEventLoopGroup= new DefaultEventLoopGroup(8, new ThreadFactory() {
@@ -46,7 +60,7 @@ public  abstract class BaseServer implements Server {
              return new Thread(r,"WORK_"+index.incrementAndGet());
          }
      });
-     serverBootstrap=new ServerBootstrap();
+   b=new ServerBootstrap();
     }
 
 
