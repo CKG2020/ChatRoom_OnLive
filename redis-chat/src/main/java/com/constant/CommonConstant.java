@@ -1,4 +1,4 @@
-package cn.tycoding.constant;
+package com.constant;
 
 /**
  * 系统常量值

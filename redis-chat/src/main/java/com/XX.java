@@ -1,2 +1,4 @@
-package com;public class XX {
+package com;
+
+public class XX {
 }
