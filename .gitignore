@@ -17,7 +17,7 @@ Thumbs.db
 *.iws
 *.iml
 *.ipr
-
+*.js
 ### NetBeans ###
 /nbproject/private/
 /build/
