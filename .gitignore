@@ -18,6 +18,8 @@ Thumbs.db
 *.iml
 *.ipr
 *.js
+*.css
+*.png
 ### NetBeans ###
 /nbproject/private/
 /build/
@@ -25,3 +27,5 @@ Thumbs.db
 /dist/cd
 /nbdist/
 /.nb-gradle/
+#/resources/
+
