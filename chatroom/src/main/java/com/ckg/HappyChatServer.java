@@ -100,7 +100,8 @@ public class HappyChatServer extends BaseServer {
                 }
             }, 3, 50, TimeUnit.SECONDS);
 
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             logger.error("WebSocketServer start fail,", e);
         }
     }
