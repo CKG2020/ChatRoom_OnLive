@@ -59,10 +59,15 @@ public class LoginController {
 
 
     @RequestMapping("register")//用户注册
+
     public String register(){
 
-        return "first/register";
+        return "/first/register";
     }
+
+
+
+
 
 
 //验证是否重复

@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <script src="js/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" type="text/css" src="css/iview.css">
+    <link rel="stylesheet" src="/css/regist.css">
     <script type="text/javascript" src="js/vue.min.js"></script>
     <script type="text/javascript" src="js/iview.min.js"></script>
-    <link rel="stylesheet" src="/css/regist.css">
+    <script src="js/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 <div class="reg_user">
@@ -33,6 +33,8 @@
                         </a>
                         <i-button type="primary" @click="handleSubmit('formInline')" style="margin-left: 50px">Signin</i-button>
                     </div>
+<!--                   <i-button  type="primary" @click="handleRegister()" style="margin-left: 30px">Register</i-button>-->
+<!--                    <i-button type="primary" @click="handleSubmit('formInline')" style="margin-left: 50px">SignIn</i-button>-->
                 </form-item>
             </i-form>
         </div>
@@ -40,7 +42,8 @@
 </div>
 <script>
 
-    var Main = {
+    var Main = new Vue({
+        el:'#app',
         data () {
             return {
                 formInline: {
@@ -91,11 +94,31 @@
                         }
                     }
                 })
-            }
+            },
+            // handleRegister(){
+            //     $.ajax({
+            //         url:"/register",
+            //         type:"get",
+            //         data:{},
+            //         success(res) {
+            //             if (res==="ok") {
+            //                 window.location.href = "register";
+            //                 // window.open("/first/register")
+            //                 console.log("ccccc")
+            //             }
+            //         }
+            //     })
+            // }
+
+
+
+
+
+
         }
-    };
-    var Component = Vue.extend(Main);
-    new Component().$mount('#app');
+    });
+    // var Component = Vue.extend(Main);
+    // new Component().$mount('#app');
 
 
 

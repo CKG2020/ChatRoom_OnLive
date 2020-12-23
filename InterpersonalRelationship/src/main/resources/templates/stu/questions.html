@@ -133,6 +133,7 @@
             success(res) {
                 let msg=JSON.stringify(res);
                 msg=$.parseJSON(msg);
+                console.log("------------");
                 console.log(msg);
                 if(res.sname==null){
                     active("新用户!","请完善你的个人信息");
@@ -206,7 +207,7 @@
         window.location.href="/chat";
     }
     function moreInfo() {
-        // mVue.choose="Questions";
+        mVue.choose="moreInfo";
         window.location.href="/moreInfo";
     }
     function analyzing() {
@@ -220,6 +221,8 @@
     }
     var answerList=new Array(20);
     var k=0;
+
+
     function changeQuestions() {
         mVue.curr=mVue.curr+1;
         if(mVue.vertical1===''||mVue.vertical2===''){

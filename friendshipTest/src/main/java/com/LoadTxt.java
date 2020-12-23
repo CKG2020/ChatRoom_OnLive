@@ -58,7 +58,7 @@ public class LoadTxt {
 
 //            f = ResourceUtils.getFile("classpath:Questions/Research_2_Res");
 //        File f  = new File("classpath:Questions/Research_2_Res");
-            ClassPathResource classPathResource = new ClassPathResource("Questions/Research_2_Res");
+            ClassPathResource classPathResource = new ClassPathResource("classpath:Questions/Research_2_Res");
             InputStream in = classPathResource.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
 

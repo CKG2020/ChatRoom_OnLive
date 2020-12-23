@@ -47,7 +47,6 @@ public class StuInfoController {
     public int newRequestCount(){
         HttpSession session = request.getSession();
         System.out.println("这是个什么问题？？？？？？？？？？？？");
-//        boardMsgService.tipMsgCount()
         Object testuser = session.getAttribute("user");
         MyUser myUser=(MyUser)testuser;
         System.out.println(myUser.toString());
@@ -56,11 +55,9 @@ public class StuInfoController {
         return boardMsgService.tipRequestCount(((MyUser)session.getAttribute("user")).getSno());
     }
 
-
     @RequestMapping(value = "update")
     @ResponseBody
     public String updateInfo(@RequestBody FormValidate formValidate){
-//        userService.updateUser(formValidate);
         boardMsgService.updateUser(formValidate);
         System.out.println(formValidate.toString());
         HttpSession session = request.getSession();
@@ -68,10 +65,7 @@ public class StuInfoController {
         session.setAttribute("user",boardMsgService.findUserBySno(formValidate.getSno()));
         return "ok";
     }
-
-
-
-
+//完善信息
     @RequestMapping(value = "moreInfo")
     public String moreInfo(){
 
@@ -87,31 +81,36 @@ public class StuInfoController {
         return "test/chat";
     }
 
-
 //问题
     @RequestMapping(value = "questions")
     public String Questions(){
         return "stu/questions";
     }
-
-
-
+//分析结果
     @RequestMapping(value = "analyzing")
     public String Analyzing(){
-//        userService.tipMsgCount()
         return "stu/analyzing";
     }
-
+//留言板
     @RequestMapping(value = "board")
     public String Board(){
         boardMsgService.setTimes(0);
         return "stu/board";
     }
+//好友列表
     @RequestMapping(value = "friendList")
     public String FriendList(){
-
         return "stu/friendList";
     }
+
+
+
+
+
+
+
+
+
 
     @RequestMapping(value="findNameCount")
     @ResponseBody
