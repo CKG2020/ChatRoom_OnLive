@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/iview.css">
+    <script type="text/javascript" src="js/vue.min.js"></script>
+    <script type="text/javascript" src="js/iview.min.js"></script>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/sockjs.js"></script>
+</head>
+<body onload="f();newMsgCount();newRequestCount()">
+
+<script type="text/javascript">
+
+    // var websocket = null;
+    // if ('WebSocket' in window) {
+    //     websocket = new WebSocket("ws://47.93.225.242:8080/websocket/socketServer.do");
+    // }
+    // else if ('MozWebSocket' in window) {
+    //     websocket = new MozWebSocket("ws://47.93.225.242:8080/websocket/socketServer.do");
+    // }
+    // else {
+    //     websocket = new SockJS("http://47.93.225.242:8080/sockjs/socketServer.do");
+    // }
+    // websocket.onopen = onOpen;
+    // websocket.onmessage = onMessage;
+    // websocket.onerror = onError;
+    // websocket.onclose = onClose;
+    //
+    //
+    // function onOpen(openEvt) {
+    //     // alert(openEvt.data);
+    // }
+    //
+    // function onMessage(evt) {
+    //     setMessageInnerHTML(evt.data)
+    //     // alert(evt.data);
+    // }
+    // function onError() {}
+    // function onClose() {}
+    //
+    //
+    // function doSend(msg) {
+    //     if (websocket.readyState === websocket.OPEN) {
+    //         d = new Date();
+    //         // var msg = document.getElementById("inputMsg").value;
+    //         msg='From:'+uu.sname+' '+d.getFullYear()
+    //             +'年'+(d.getMonth()+1)+'月'+d.getDate()
+    //             +'日'+d.getHours()+':'+d.getMinutes()
+    //             +':'+d.getSeconds()+":\n"+msg;
+    //         websocket.send(msg);//调用后台handleTextMessage方法
+    //         alert("发送成功!");
+    //     } else {
+    //         alert("连接失败!");
+    //     }
+    // }
+    // window.close=function()
+    // {
+    //     websocket.onclose();
+    // };
+
+    var websocket = null;
+
+    /**
+     * 链接WebSocket
+     */
+    function connectChat() {
+        console.log(">> 链接WebSocket")
+        websocket = new WebSocket('ws://localhost:8080/chat/' + (new Date()).getTime())
+
+        /**
+         * Websocket链接错误时调用
+         */
+        websocket.onerror = function () {
+            writeHTML('Websocket链接发生错误')
+        }
+
+        /**
+         * Websocket链接成功时调用
+         */
+        websocket.onopen = function () {
+            writeHTML('Websocket链接成功')
+        }
+
+        /**
+         * 接收到消息的回调方法
+         */
+        websocket.onmessage = function (event) {
+            console.log(event)
+            writeHTML(event.data)
+        }
+
+        /**
+         * 链接关闭时的回调方法
+         */
+        websocket.onclose = function () {
+            writeHTML('Websocket链接关闭')
+        }
+    }
+
+    /**
+     * 关闭WebSock链接
+     */
+    function closeChat() {
+        websocket.close()
+    }
+
+    /**
+     * 将消息写到HTML标签上
+     * @param message
+     */
+    function writeHTML(message) {
+        document.getElementById("message").innerHTML += message + '<br/>'
+    }
+
+    /**
+     * 发送消息
+     */
+    function send() {
+        var message = document.getElementById('text').value
+        websocket.send(message);
+    }
+
+</script>
+<div id="app">
+    <div class="layout">
+        <layout :style="{minHeight: '100vh'}">
+            <sider collapsible :collapsed-width="78" v-model="isCollapsed">
+                <i-menu theme="dark" width="auto" :class="menuitemClasses" open-names="['1','2']">
+                    <submenu name="1">
+                        <template slot="title">
+                            个人中心
+                            <icon type="ios-paper"/>
+                        </template>
+                        <menu-item name="1-1">完善信息</menu-item>
+                        <Badge :count="countMsg">
+                            <menu-item name="1-2">
+                            <span onclick="board()">
+                                留言板</span>
+                            </menu-item>
+                        </Badge>
+                        <menu-item name="1-3">
+                            <span onclick="questions()">
+                                调查问卷
+                            </span></menu-item>
+                        <menu-item name="1-4">
+                            <span onclick="analyzing()">
+                                分析结果
+                            </span></menu-item>
+                    </submenu>
+                    <submenu name="2">
+                        <template slot="title">聊天室
+                            <icon type="ios-people"/>
+                        </template>
+                        <Badge :count="countNewRequest">
+                            <menu-item name="2-1">
+                                <span onclick="friendList()">好友列表</span>
+                            </menu-item>
+                        </Badge>
+                        <menu-item name="2-2">
+                            <span onclick="chat()">聊天室</span>
+                        </menu-item>
+                    </submenu>
+                </i-menu>
+            </sider>
+            <layout>
+                <i-header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
+                    <div style="float: left;margin-left: 70%">
+                        <h1>欢迎您 ! &nbsp;&nbsp; {{message}}</h1>
+                    </div>
+                    <a href="/login" style="margin-left: 50px"> 注销</a>
+                </i-header>
+                <i-content :style="{padding: '0 16px 16px'}">
+                    <breadcrumb :style="{margin: '16px 0'}">
+                        {{info}}
+                    </breadcrumb>
+                    <card>
+                        <div>
+                            <button onclick="connectChat()">连接到聊天室</button>
+                            <button onclick="closeChat()">退出聊天室</button>
+                            <br>
+                                                    <input  id="text" v-model="boardText" maxlength="50" show-word-limit type="textarea"
+                                                             placeholder="Enter something..." style="width:50%">
+
+
+                            <!--                        <i-button type="success" long @click="sendMsg()">-->
+                            <!--                            SUBMIT</i-button>-->
+                            <br>
+<!--                            <input id="text" type="text">-->
+                            <i-button     type="success"  @click="send()">
+                                发送消息
+                            </i-button>
+                            <!--                        <button    type="success" long onclick="send()"></button>-->
+
+                        </div>
+                        <div id="message">
+                        </div>
+                        <div style="margin-left: 65%;margin-top: 25%">
+                            <img src="pic/cat.png" style="height: 250px;width: 250px">
+                        </div>
+                    </card>
+                </i-content>
+            </layout>
+        </layout>
+    </div>
+</div>
+<script>
+    function setMessageInnerHTML(innerHTML) {
+        document.getElementById('message').innerHTML += innerHTML + '<br/>'
+    }
+
+    function questions() {
+        mVue.choose = "questions";
+        window.location.href = "/questions/";
+    }
+
+    function analyzing() {
+        mVue.choose = "analyzing";
+        window.location.href = "/analyzing/";
+    }
+
+    function board() {
+        mVue.choose = "board";
+        window.location.href = "/board/";
+    }
+
+    function friendList() {
+        mVue.choose = "friendList";
+        window.location.href = "/friendList/";
+    }
+
+    function moreInfo() {
+        // mVue.choose="Questions";
+        window.location.href = "/moreInfo/";
+    }
+
+    var mVue = new Vue({
+        el: '#app',
+        data() {
+            return {
+                boardText: '',
+                countMsg: '',
+                countNewRequest: '',
+                message: '',
+                info: '',
+                isCollapsed: false,
+                choose: '',
+            }
+        },
+        computed: {
+            menuitemClasses: function () {
+                return [
+                    'menu-item',
+                    this.isCollapsed ? 'collapsed-menu' : ''
+                ]
+            },
+        },
+        methods: {
+            sendMsg() {
+                send(mVue.boardText);
+            }
+        }
+    });
+
+    function newMsgCount() {
+        $.ajax({
+            url: 'newMsgCount',
+            type: 'post',
+            success(res) {
+                mVue.countMsg = res;
+                console.log(res);
+            }
+        })
+    }
+
+    function newRequestCount() {
+        $.ajax({
+            url: 'newRequestCount',
+            type: 'post',
+            success(res) {
+                mVue.countNewRequest = res;
+                console.log(res);
+            }
+        })
+    }
+
+    var uu;
+
+    function f() {
+        $.ajax({
+            url: '/search',
+            type: 'get',
+            success(res) {
+                let msg = JSON.stringify(res);
+                msg = $.parseJSON(msg);
+                uu = msg;
+                if (res.sname === null) {
+                    active("新用户!", "请完善你的个人信息");
+                    MoreInfo();
+                } else {
+                    active(msg.sname);
+                }
+            }
+        })
+    }
+
+    function active(res, ss) {
+        mVue.message = res;
+        mVue.info = ss;
+    }
+</script>
+</body>
+</html>
