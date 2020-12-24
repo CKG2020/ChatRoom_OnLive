@@ -1,7 +1,8 @@
-package com.easyarch.util;
+package com;
 
-import com.easyarch.entity.Answer;
-import com.easyarch.entity.Question;
+
+import com.entity.Answer;
+import com.entity.Question;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;

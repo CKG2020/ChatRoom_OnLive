@@ -28,20 +28,11 @@ public class BoardMsgController {
     }
 
 
-
     @RequestMapping(value = "/getBoard")
     @ResponseBody
     public List<BoardMsg> getBoard(){
         HttpSession session = request.getSession();
         return  boardMsgService.showBoardMsg(((MyUser)session.getAttribute("user")).getSno());
     }
-
-
-
-
-
-
-
-
 
 }

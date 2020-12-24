@@ -9,17 +9,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class Message implements Serializable {
-
     private User from;
-
     private String message;
-
-
     private  User to;
     private String time;
-
-
-
-
-
 }
