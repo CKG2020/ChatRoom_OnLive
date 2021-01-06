@@ -44,8 +44,8 @@ public interface UserMapper {
          "        from SSHpro.UserInfo where UserInfo.Sno in (select SSHpro.pyq.Sno1 from SSHpro.pyq where Sno2=#{sno} and addStatus=0)")
     MyUser frinedsRequest(@Param("sno") String sno);
 
-//    @Select("  select COUNT(*) from SSHpro.UserInfo")
-//    int findallcount();
+    @Select("  select COUNT(*) from SSHpro.UserInfo")
+    int findallcount();
 
 
 

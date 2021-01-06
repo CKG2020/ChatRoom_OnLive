@@ -87,5 +87,10 @@ import java.util.List;
 //    }
 
 
+
+    public int findallcount(){
+        return  userMapper.findallcount();
+    }
+
 }
 
