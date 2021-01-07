@@ -27,184 +27,177 @@ public class StuInfoController {
     HttpServletRequest request;
     @Autowired
     BoardMsgService boardMsgService;
-   @Autowired
+    @Autowired
     UserInfoService userInfoService;
-   @Autowired
+    @Autowired
     PyqService pyqService;
 
 
-
-    @RequestMapping(value="newMsgCount")
+    @RequestMapping(value = "newMsgCount")
     @ResponseBody
-    public int newMsgCount(){
+    public int newMsgCount() {
         HttpSession session = request.getSession();
-        return boardMsgService.tipMsgCount(((MyUser)session.getAttribute("user")).getSno());
+        return boardMsgService.tipMsgCount(((MyUser) session.getAttribute("user")).getSno());
     }
 
 
-    @RequestMapping(value="newRequestCount")
+    @RequestMapping(value = "newRequestCount")
     @ResponseBody
-    public int newRequestCount(){
+    public int newRequestCount() {
         HttpSession session = request.getSession();
         System.out.println("这是个什么问题？？？？？？？？？？？？");
         Object testuser = session.getAttribute("user");
-        MyUser myUser=(MyUser)testuser;
+        MyUser myUser = (MyUser) testuser;
         System.out.println(myUser.toString());
         int num = boardMsgService.tipRequestCount(((MyUser) session.getAttribute("user")).getSno());
         System.out.println(num);
-        return boardMsgService.tipRequestCount(((MyUser)session.getAttribute("user")).getSno());
+        return boardMsgService.tipRequestCount(((MyUser) session.getAttribute("user")).getSno());
     }
 
     @RequestMapping(value = "update")
     @ResponseBody
-    public String updateInfo(@RequestBody FormValidate formValidate){
+    public String updateInfo(@RequestBody FormValidate formValidate) {
         boardMsgService.updateUser(formValidate);
         System.out.println(formValidate.toString());
         HttpSession session = request.getSession();
         session.removeAttribute("user");
-        session.setAttribute("user",boardMsgService.findUserBySno(formValidate.getSno()));
+        session.setAttribute("user", boardMsgService.findUserBySno(formValidate.getSno()));
         return "ok";
     }
-//完善信息
+
+    //完善信息
     @RequestMapping(value = "moreInfo")
-    public String moreInfo(){
+    public String moreInfo() {
 
         return "/stu/moreInfo";
     }
 
-//聊天
+    //聊天
     @RequestMapping(value = "chat")
-    public String ChatRoom(){
+    public String ChatRoom() {
         HttpSession session = request.getSession();
         MyUser user = (MyUser) session.getAttribute("user");
         System.out.println(user.getSname());
         return "test/chat";
     }
 
-//问题
+    //问题
     @RequestMapping(value = "questions")
-    public String Questions(){
+    public String Questions() {
         return "stu/questions";
     }
-//分析结果
+
+    //分析结果
     @RequestMapping(value = "analyzing")
-    public String Analyzing(){
+    public String Analyzing() {
         return "stu/analyzing";
     }
-//留言板
+
+    //留言板
     @RequestMapping(value = "board")
-    public String Board(){
+    public String Board() {
         boardMsgService.setTimes(0);
         return "stu/board";
     }
-//好友列表
+
+    //好友列表
     @RequestMapping(value = "friendList")
-    public String FriendList(){
+    public String FriendList() {
         return "stu/friendList";
     }
 
 
-
-
-
-
-
-
-
-
-    @RequestMapping(value="findNameCount")
+    @RequestMapping(value = "findNameCount")
     @ResponseBody
-    public int findNameCount(@RequestParam String Sname){
+    public int findNameCount(@RequestParam String Sname) {
         return userInfoService.findNameCount(Sname);
     }
 
-    @RequestMapping(value="findSnoCount")
+    @RequestMapping(value = "findSnoCount")
     @ResponseBody
-    public int findSnoCount(@RequestParam String Sno){
+    public int findSnoCount(@RequestParam String Sno) {
         return userInfoService.findSnoCount(Sno);
     }
-//好友数量
-    @RequestMapping(value="friendsCount")
+
+    //好友数量
+    @RequestMapping(value = "friendsCount")
     @ResponseBody
-    public int friendsCount(){
+    public int friendsCount() {
         HttpSession session = request.getSession();
-        return pyqService.findFriendsCount(((MyUser)session.getAttribute("user")).getSno());
-    }
-    @RequestMapping(value="FriendList/showFriends")
-    @ResponseBody
-    public List<MyUser> getFriends(){
-        HttpSession session = request.getSession();
-        System.out.println(((MyUser)session.getAttribute("user")).getSno());
-        System.out.println(userInfoService.showFriends(((MyUser)session.getAttribute("user")).getSno()));
-        return userInfoService.showFriends(((MyUser)session.getAttribute("user")).getSno());
+        return pyqService.findFriendsCount(((MyUser) session.getAttribute("user")).getSno());
     }
 
-
-
-
-    @RequestMapping(value="delFriend")
+    @RequestMapping(value = "FriendList/showFriends")
     @ResponseBody
-    public String delFriend(@RequestParam String sno){
+    public List<MyUser> getFriends() {
         HttpSession session = request.getSession();
-        pyqService.delFriend(((MyUser)session.getAttribute("user")).getSno(),sno);
+        System.out.println(((MyUser) session.getAttribute("user")).getSno());
+        System.out.println(userInfoService.showFriends(((MyUser) session.getAttribute("user")).getSno()));
+        return userInfoService.showFriends(((MyUser) session.getAttribute("user")).getSno());
+    }
+
+
+    @RequestMapping(value = "delFriend")
+    @ResponseBody
+    public String delFriend(@RequestParam String sno) {
+        HttpSession session = request.getSession();
+        pyqService.delFriend(((MyUser) session.getAttribute("user")).getSno(), sno);
         return "";
     }
 
 
-    @RequestMapping(value="acceptRequest")
+    @RequestMapping(value = "acceptRequest")
     @ResponseBody
-    public String acceptRequest(@RequestParam String sno){
+    public String acceptRequest(@RequestParam String sno) {
         HttpSession session = request.getSession();
-        pyqService.acceptRequest(sno,((MyUser)session.getAttribute("user")).getSno());
+        pyqService.acceptRequest(sno, ((MyUser) session.getAttribute("user")).getSno());
         return "";
     }
 
 
-    @RequestMapping(value="refuseRequest")
+    @RequestMapping(value = "refuseRequest")
     @ResponseBody
-    public String refuseRequest(@RequestParam String sno){
+    public String refuseRequest(@RequestParam String sno) {
         HttpSession session = request.getSession();
-        pyqService.refuseRequest(sno,((MyUser)session.getAttribute("user")).getSno());
+        pyqService.refuseRequest(sno, ((MyUser) session.getAttribute("user")).getSno());
         return "";
     }
 
 
-
-    @RequestMapping(value="addRequest")
+    @RequestMapping(value = "addRequest")
     @ResponseBody
-    public String addRequest(@RequestParam String sno){
+    public String addRequest(@RequestParam String sno) {
         HttpSession session = request.getSession();
-        pyqService.addRequest(((MyUser)session.getAttribute("user")).getSno(),sno);
+        pyqService.addRequest(((MyUser) session.getAttribute("user")).getSno(), sno);
         return "";
     }
 
 
     //此处可能有问题　就是关于数据库收集的ＭｙＵｓｅｒ　是直接返回ｌｉｓｔ呢还是　还是说按照我下面这样式的呢？？？？有待考证
-    @RequestMapping(value="findBySno")
+    @RequestMapping(value = "findBySno")
     @ResponseBody
-    public List<UserShow> findBySno(@RequestParam String Sno){
-        System.out.println("Sno"+Sno);
+    public List<UserShow> findBySno(@RequestParam String Sno) {
+        System.out.println("Sno" + Sno);
         return (List<UserShow>) userInfoService.findUserBySno(Sno);
     }
 
 
-
-    @RequestMapping(value="findByName")
+    @RequestMapping(value = "findByName")
     @ResponseBody
-    public List<UserShow> findbyName(@RequestParam String Sname){
+    public List<UserShow> findbyName(@RequestParam String Sname) {
 
         return userInfoService.findUsersByName(Sname);
     }
 
 
-    @RequestMapping(value="countRequest")
+    @RequestMapping(value = "countRequest")
     @ResponseBody
-    public int countRequest(){
+    public int countRequest() {
         HttpSession session = request.getSession();
-        return pyqService.countRequest(((MyUser)session.getAttribute("user")).getSno());
+        return pyqService.countRequest(((MyUser) session.getAttribute("user")).getSno());
     }
 
-//
+    //
 //    @RequestMapping(value="friendList/getRequest")
 //    @ResponseBody
 //    public  List<MyUser>  getRequest(){
@@ -212,6 +205,18 @@ public class StuInfoController {
 //        System.out.println(userService.showFriendsRequest(((MyUser)session.getAttribute("user")).getSno()));
 //        return userService.showFriendsRequest(((MyUser)session.getAttribute("user")).getSno());
 //    }
+    @RequestMapping(value = "FriendList/friendInfo")
+    @ResponseBody
+    public MyUser getFriendInfo(@RequestParam String sno) {
+
+        return userInfoService.findUserBySno(sno);
+    }
+
+    @RequestMapping(value = "FriendList/showFewBoardMsg")
+    @ResponseBody
+    public List getFewBoardMsg(@RequestParam String sno) {
+        return boardMsgService.showBoardMsg(sno);
+    }
 
 
 }

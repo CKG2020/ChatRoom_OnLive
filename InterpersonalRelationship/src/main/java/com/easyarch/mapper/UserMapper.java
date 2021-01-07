@@ -57,6 +57,7 @@ public interface UserMapper {
    @Select(" select COUNT(*) from SSHpro.UserInfo where Collage like concat(concat(\"%\",#{collage}),\"%\")")
     int findCollageCount (@Param("collage") String collage);
 
+
   //班级
    @Select("  select COUNT(*) from SSHpro.UserInfo where Sclass like concat(concat(\"%\",#{sclass}),\"%\")")
    int  findClassCount(@Param("sclass")  String sclass);

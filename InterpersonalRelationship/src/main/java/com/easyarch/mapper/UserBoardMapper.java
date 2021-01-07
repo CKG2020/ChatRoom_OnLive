@@ -53,7 +53,7 @@ public interface UserBoardMapper {
     int allFinished();
 
     @Select("        select SSHpro.UserBoard.Scores from SSHpro.UserBoard where IsFinishedQuestion=1\n")
-    int findScore();
+    List<Integer> findScore();
 
     @Select("        select * from SSHpro.UserBoard where Sno=#{sno}\n")
     UserBoard findUserBoard(@Param("sno") String sno);

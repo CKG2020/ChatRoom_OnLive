@@ -4,6 +4,7 @@ import com.easyarch.entity.MyUser;
 import com.easyarch.entity.UserShow;
 import com.easyarch.mapper.UserMapper;
 import com.easyarch.mapper.UserShowMapper;
+import com.easyarch.util.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ import java.util.List;
 
         }
 
-        //按学号查找　　确定是否重复
+        //按学号查找　　确定是否重复  查询所有内容
         public MyUser findUserBySno(String Sno){
 
             return userMapper.findUserBySno(Sno);
@@ -92,5 +93,10 @@ import java.util.List;
         return  userMapper.findallcount();
     }
 
+
+    public List findpage(int curr, int pageSize) {
+
+        return Page.pageDiv(curr,pageSize,userList);
+    }
 }
 

@@ -24,13 +24,16 @@ public interface UserShowMapper {
     @Select("   select SSHpro.UserInfo.Sno,Sage,Scall,Sname,Sclass,Collage,Major,SSHpro.UserBoard.Scores\n" +
             "        from SSHpro.UserInfo,SSHpro.UserBoard\n" +
             "        where( UserInfo.Sno=UserBoard.Sno ) and UserInfo.Sno like  concat(concat(\"%\",#{sno}),\"%\");\n")
-    UserShow findBySno(@Param("sno") String sno);
+   List<UserShow> findBySno(@Param("sno") String sno);
+
+
+
 
     //联合查询
     @Select("select SSHpro.UserInfo.Sno,Sage,Scall,Sname,Sclass,Collage,Major,SSHpro.UserBoard.Scores\n" +
             "        from SSHpro.UserInfo,SSHpro.UserBoard\n" +
             "        where( UserInfo.Sno=UserBoard.Sno ) and UserInfo.Sage = #{sage}")
-    UserShow findByAge(@Param("sage") int sage);
+    List<UserShow> findByAge(@Param("sage") int sage);
 
     @Select("select SSHpro.UserInfo.Sno,Sage,Scall,Sname,Sclass,Collage,Major,SSHpro.UserBoard.Scores\n" +
             "        from SSHpro.UserInfo,SSHpro.UserBoard\n" +
@@ -41,12 +44,12 @@ public interface UserShowMapper {
     @Select("  select SSHpro.UserInfo.Sno,Sage,Scall,Sname,Sclass,Collage,Major,SSHpro.UserBoard.Scores\n" +
             "        from SSHpro.UserInfo,SSHpro.UserBoard\n" +
             "        where( UserInfo.Sno=UserBoard.Sno ) and UserInfo.Collage like concat(concat(\"%\",#{collage}),\"%\")")
-    UserShow findByCollage(@Param("collage") String collage);
+    List<UserShow>  findByCollage(@Param("collage") String collage);
 
     @Select("    select SSHpro.UserInfo.Sno,Sage,Scall,Sname,Sclass,Collage,Major,SSHpro.UserBoard.Scores\n" +
             "        from SSHpro.UserInfo,SSHpro.UserBoard\n" +
             "        where( UserInfo.Sno=UserBoard.Sno ) and UserInfo.Sclass like concat(concat(\"%\",#{sclass}),\"%\")")
-    UserShow findByClass(@Param("sclass") String sclass);
+    List<UserShow> findByClass(@Param("sclass") String sclass);
 
 //===============================＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 

@@ -21,6 +21,14 @@ public class LoginController {
     public String loginAdmin(){
         return "first/loginAdmin";
     }
+    @RequestMapping("findall")//登录成功跳转页面
+    public String all(){
+        return "admin/demo";
+    }
+
+
+
+
 
     @RequestMapping("/login")
     public String login(){

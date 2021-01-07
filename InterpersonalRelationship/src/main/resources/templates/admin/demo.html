@@ -183,7 +183,7 @@
 
     function showFewBoardMsg(number) {
         $.ajax({
-            url:'/stu/FriendList/showFewBoardMsg',
+            url:'/FriendList/showFewBoardMsg',
             type:'post',
             data:{
                 "sno":number
@@ -197,7 +197,7 @@
     }
     function friendsInfo(number) {
         $.ajax({
-            url:'/stu/FriendList/friendInfo',
+            url:'/FriendList/friendInfo',
             type:'post',
             data:{
                 "sno":number
@@ -223,16 +223,16 @@
         })
     }
     function deleteuser() {
-        window.location.href='/deleteuser'
+        window.location.href='/admin/deleteuser'
     }
     function listener() {
-        window.location.href='/listener'
+        window.location.href='/admin/listener'
     }
     function analyzing() {
-        window.location.href='/analyzing'
+        window.location.href='/admin/analyzing'
     }
     function addQuestion() {
-        window.location.href='/addQuestion'
+        window.location.href='/admin/addQuestion'
     }
     var Page = new Vue({
         el:'#app',
