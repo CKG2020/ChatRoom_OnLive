@@ -1,7 +1,9 @@
 package com.easyarch.controller;
 
+import com.easyarch.entity.Admin;
 import com.easyarch.entity.FormValidate;
 import com.easyarch.entity.MyUser;
+import com.easyarch.service.AdminService;
 import com.easyarch.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,21 +18,39 @@ public class LoginController {
     HttpServletRequest request;
     @Autowired
     UserInfoService userService;
+    @Autowired
+    AdminService adminService;
 
-    @RequestMapping("/loginAdmin")
+    @RequestMapping("loginAdmin")
     public String loginAdmin(){
         return "first/loginAdmin";
     }
-    @RequestMapping("findall")//登录成功跳转页面
+    @RequestMapping("/findall")//登录成功跳转页面
     public String all(){
         return "admin/demo";
     }
 
+    @RequestMapping(value = "check_admin",method = RequestMethod.POST)
+    @ResponseBody//管理员
+    public String admin(@RequestParam String Sno, String Spwd) {
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        System.out.println(adminService.adminlogin(Sno, Spwd));
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        if (adminService.adminlogin(Sno, Spwd) != null) {
+            return "ok";
+        }
+        return null;
+
+    }
 
 
 
 
-    @RequestMapping("/login")
+
+
+//    ==============================================================上面是管理员
+
+    @RequestMapping("login")
     public String login(){
         HttpSession session = request.getSession();
         if(session.getAttribute("user")!=null){
@@ -40,7 +60,7 @@ public class LoginController {
         return "first/login";
     }
     //用户登录
-    @RequestMapping(value = "checkUser" ,method = RequestMethod.POST)
+    @RequestMapping(value = "check_user" ,method = RequestMethod.POST)
     @ResponseBody
     public Object checkUser(@RequestParam String Sno, String Spwd){
         MyUser myUser;
@@ -51,6 +71,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         myUser =(MyUser)obj;
         session.setAttribute("user", myUser);
+
         return myUser;
     }
 
@@ -111,6 +132,8 @@ public class LoginController {
 
     }
  //完善信息
+
+
     @RequestMapping(value = "perfectInfo")
     @ResponseBody
     public String updateInfo(@RequestBody FormValidate formValidate){

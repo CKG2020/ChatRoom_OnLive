@@ -286,7 +286,7 @@
             changepage(curr){
                 $.ajax({
                     url: '/admin/findpage',
-                    type: 'get',
+                    type: 'post',
                     data: {
                         "curr": curr,
                         "pageSize": this.pageSize

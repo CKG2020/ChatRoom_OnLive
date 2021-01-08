@@ -163,7 +163,7 @@
 
     function finishedPercent() {
         $.ajax({
-            url:'finishedPercent',
+            url:'/admin/finishedPercent',
             type:'post',
             success(res) {
                 Page.percent=res.percent;
@@ -210,13 +210,13 @@
 
 
     function listener() {
-        window.location.href='admin/listener'
+        window.location.href='/admin/listener'
     }
     function addQuestion() {
-        window.location.href='admin/addQuestion'
+        window.location.href='/admin/addQuestion'
     }
     function demo() {
-        window.location.href='/findall'
+        window.location.href='/admin/findall'
     }
     function deleteuser() {
         window.location.href='admin/deleteuser'
