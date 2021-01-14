@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author ${author}
- * @since 2021-01-13
+ * @since 2021-01-14
  */
 @Service
 public class RjuserServiceImpl extends ServiceImpl<RjuserMapper, Rjuser> implements RjuserService {

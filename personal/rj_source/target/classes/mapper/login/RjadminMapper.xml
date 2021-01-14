@@ -4,7 +4,6 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.rj.modules.login.model.Rjadmin">
-        <result column="id" property="id" />
         <result column="adminname" property="adminname" />
         <result column="password" property="password" />
         <result column="nichen" property="nichen" />

@@ -4,7 +4,6 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.rj.modules.login.model.Rjuser">
-        <result column="id" property="id" />
         <result column="rjusername" property="rjusername" />
         <result column="password" property="password" />
         <result column="gender" property="gender" />
